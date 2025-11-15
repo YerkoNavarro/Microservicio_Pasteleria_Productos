@@ -1,4 +1,4 @@
-package com.example.repository;
+package com.example.backend__pasteleria.repository;
 
 import org.springframework.stereotype.Repository;
 import com.example.backend__pasteleria.entity.ProductEntity;

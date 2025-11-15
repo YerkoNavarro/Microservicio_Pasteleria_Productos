@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.backend__pasteleria.model.Producto;
-import com.example.repository.ProductRepository;
+import com.example.backend__pasteleria.repository.ProductRepository;
 
 import jakarta.transaction.Transactional;
 
