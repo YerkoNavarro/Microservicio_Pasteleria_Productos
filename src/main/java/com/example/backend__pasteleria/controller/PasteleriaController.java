@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,8 +25,8 @@ public class PasteleriaController {
         return pasteleriaService.crearProducto(p);
     }
 
-    @DeleteMapping("/")
-    public boolean eliminarProducto(int id){
+    @DeleteMapping("/{id}")
+    public boolean eliminarProducto(@PathVariable int id){
         return pasteleriaService.eliminarProducto(id);
     }
 
@@ -40,7 +41,7 @@ public class PasteleriaController {
     }
 
     @GetMapping("/{id}")
-    public ProductEntity buscarProducto(int id){
+    public ProductEntity buscarProducto(@PathVariable int id){
         return pasteleriaService.buscarProducto(id);
     }
 

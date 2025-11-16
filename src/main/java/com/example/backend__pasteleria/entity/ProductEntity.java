@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class ProductEntity {
     
     @Id
-    private int id ;
+    private int id;
     @Column
     private String nombre;
     @Column

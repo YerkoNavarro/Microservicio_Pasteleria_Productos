@@ -21,7 +21,7 @@ public class PasteleriaService {
 
     //crud de productos
     public boolean crearProducto(Producto p){
-        if (productRepository.existsById(p.getId()) || p == null) {
+        if (productRepository.existsById(p.getId())) {
             System.out.println("El producto ya existe o el producto es nulo");
             return false;
         }else{
