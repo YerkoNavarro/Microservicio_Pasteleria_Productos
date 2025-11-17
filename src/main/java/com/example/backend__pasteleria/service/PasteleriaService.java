@@ -17,15 +17,13 @@ public class PasteleriaService {
     @Autowired 
     private ProductRepository productRepository;
 
-    ProductEntity productEntity = new ProductEntity();
+    
+    
 
     //crud de productos
     public boolean crearProducto(Producto p){
-        if (productRepository.existsById(p.getId())) {
-            System.out.println("El producto ya existe o el producto es nulo");
-            return false;
-        }else{
-            productEntity.setId(p.getId());
+       
+            ProductEntity productEntity = new ProductEntity();
             productEntity.setNombre(p.getNombre());
             productEntity.setPrecio(p.getPrecio());
             productEntity.setDescripcion(p.getDescripcion());
@@ -33,7 +31,7 @@ public class PasteleriaService {
             productRepository.save(productEntity);
             System.out.println("Producto creado exitosamente en la base de datos");
             return true;
-        }
+        
         
     }
     
@@ -52,6 +50,7 @@ public class PasteleriaService {
     
     public boolean actualizarProducto(Producto p){
         if (productRepository.existsById(p.getId())) {
+            ProductEntity productEntity = new ProductEntity();
             productEntity.setId(p.getId());
             productEntity.setNombre(p.getNombre());
             productEntity.setPrecio(p.getPrecio());

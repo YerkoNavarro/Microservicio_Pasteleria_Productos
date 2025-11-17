@@ -3,46 +3,59 @@ package com.example.backend__pasteleria.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend__pasteleria.entity.ProductEntity;
 import com.example.backend__pasteleria.model.Producto;
 import com.example.backend__pasteleria.service.PasteleriaService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 @RestController
 public class PasteleriaController {
     @Autowired
     private PasteleriaService pasteleriaService;
 
     @PostMapping("/")
-    public boolean crearProducto(@RequestBody Producto p){
-        return pasteleriaService.crearProducto(p);
+    public ResponseEntity<Boolean> crearProducto(@RequestBody Producto p){
+        if(pasteleriaService.crearProducto(p)){
+            return ResponseEntity.ok(true);
+        }else{
+            return ResponseEntity.ok(false);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public boolean eliminarProducto(@PathVariable int id){
-        return pasteleriaService.eliminarProducto(id);
+    public ResponseEntity<Boolean> eliminarProducto(@PathVariable int id){
+        if(pasteleriaService.eliminarProducto(id)){
+            return ResponseEntity.ok(true);
+        }else{
+            return ResponseEntity.ok(false);
+        }
     }
 
     @PutMapping("/")
-    public boolean actualizarProducto(@RequestBody Producto p){
-        return pasteleriaService.actualizarProducto(p);
+    public ResponseEntity<Boolean> actualizarProducto(@RequestBody Producto p){
+        if(pasteleriaService.actualizarProducto(p)){
+            return ResponseEntity.ok(true);
+        }else{
+            return ResponseEntity.ok(false);
+        }
     }
 
     @GetMapping("/")
-    public List<ProductEntity> listarProductos(){
-        return pasteleriaService.listarProductos();
+    public ResponseEntity<List<ProductEntity>> listarProductos(){
+        return ResponseEntity.ok(pasteleriaService.listarProductos());
     }
 
     @GetMapping("/{id}")
-    public ProductEntity buscarProducto(@PathVariable int id){
-        return pasteleriaService.buscarProducto(id);
+    public ResponseEntity<ProductEntity> buscarProducto(@PathVariable int id){
+        return ResponseEntity.ok(pasteleriaService.buscarProducto(id));
     }
 
 
