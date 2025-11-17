@@ -48,10 +48,10 @@ public class PasteleriaService {
     }
     
     
-    public boolean actualizarProducto(Producto p){
-        if (productRepository.existsById(p.getId())) {
+    public boolean actualizarProducto(int id, Producto p){
+        if (productRepository.existsById(id)) {
             ProductEntity productEntity = new ProductEntity();
-            productEntity.setId(p.getId());
+            productEntity.setId(id);
             productEntity.setNombre(p.getNombre());
             productEntity.setPrecio(p.getPrecio());
             productEntity.setDescripcion(p.getDescripcion());

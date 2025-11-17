@@ -39,9 +39,9 @@ public class PasteleriaController {
         }
     }
 
-    @PutMapping("/")
-    public ResponseEntity<Boolean> actualizarProducto(@RequestBody Producto p){
-        if(pasteleriaService.actualizarProducto(p)){
+    @PutMapping("/{id}")
+    public ResponseEntity<Boolean> actualizarProducto(@PathVariable int id, @RequestBody Producto p){
+        if(pasteleriaService.actualizarProducto(id, p)){
             return ResponseEntity.ok(true);
         }else{
             return ResponseEntity.ok(false);
