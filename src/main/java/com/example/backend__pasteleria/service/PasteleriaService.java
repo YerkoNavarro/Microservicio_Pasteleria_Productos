@@ -15,32 +15,35 @@ import com.example.backend__pasteleria.entity.ProductEntity;
 @Service
 public class PasteleriaService {
     @Autowired 
-    private ProductRepository productRepository;
+    private ProductRepository Repository;
 
-    ProductEntity productEntity = new ProductEntity();
+    
 
     //crud de productos
     public boolean crearProducto(Producto p){
-        if (productRepository.existsById(p.getId()) || p == null) {
-            System.out.println("El producto ya existe o el producto es nulo");
-            return false;
-        }else{
-            productEntity.setId(p.getId());
-            productEntity.setNombre(p.getNombre());
-            productEntity.setPrecio(p.getPrecio());
-            productEntity.setDescripcion(p.getDescripcion());
-            productEntity.setImagen(p.getImagen());
-            productRepository.save(productEntity);
+        ProductEntity  Entity = new ProductEntity();
+           try {
+            
+            Entity.setNombre(p.getNombre());
+            Entity.setPrecio(p.getPrecio());
+            Entity.setDescripcion(p.getDescripcion());
+            Entity.setImagen(p.getImagen());
+            Repository.save(Entity);
             System.out.println("Producto creado exitosamente en la base de datos");
             return true;
-        }
+           } catch (Exception e) {
+            System.out.println("Error al crear el producto");
+            return false;
+           }
+            
+        
         
     }
     
     @Transactional
     public boolean eliminarProducto(int id){
-        if (productRepository.existsById(id)) {
-            productRepository.deleteById(id);
+        if (Repository.existsById(id)) {
+            Repository.deleteById(id);
             System.out.println("Producto eliminado exitosamente");
             return true;
         }else{
@@ -50,14 +53,15 @@ public class PasteleriaService {
     }
     
     
-    public boolean actualizarProducto(Producto p){
-        if (productRepository.existsById(p.getId())) {
-            productEntity.setId(p.getId());
-            productEntity.setNombre(p.getNombre());
-            productEntity.setPrecio(p.getPrecio());
-            productEntity.setDescripcion(p.getDescripcion());
-            productEntity.setImagen(p.getImagen());
-            productRepository.save(productEntity);
+    public boolean actualizarProducto(int id,Producto p){
+        ProductEntity Entity = new ProductEntity();
+        if (Repository.existsById(id)) {
+            Entity.setId(id);
+            Entity.setNombre(p.getNombre());
+            Entity.setPrecio(p.getPrecio());
+            Entity.setDescripcion(p.getDescripcion());
+            Entity.setImagen(p.getImagen());
+            Repository.save(Entity);
             System.out.println("Producto actualizado exitosamente");
             return true;
         }else{
@@ -67,10 +71,10 @@ public class PasteleriaService {
     }    
 
     public List<ProductEntity> listarProductos(){
-        return productRepository.findAll();
+        return Repository.findAll();
     }
 
     public ProductEntity buscarProducto(int id){
-        return productRepository.findById(id).orElse(null);
+        return Repository.findById(id).orElse(null);
     }
 }
