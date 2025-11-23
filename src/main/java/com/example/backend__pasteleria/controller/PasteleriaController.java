@@ -3,6 +3,7 @@ package com.example.backend__pasteleria.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,13 +38,13 @@ public class PasteleriaController {
     }
 
     @GetMapping("/")
-    public List<ProductEntity> listarProductos(){
-        return pasteleriaService.listarProductos();
+    public ResponseEntity<List<ProductEntity>> listarProductos(){
+        return ResponseEntity.ok(pasteleriaService.listarProductos());
     }
 
     @GetMapping("/{id}")
-    public ProductEntity buscarProducto(int id){
-        return pasteleriaService.buscarProducto(id);
+    public ResponseEntity<ProductEntity> buscarProducto(@PathVariable int id){
+        return ResponseEntity.ok(pasteleriaService.buscarProducto(id));
     }
 
 
