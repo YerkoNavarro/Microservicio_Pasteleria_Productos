@@ -29,7 +29,7 @@ public class PasteleriaController {
     }
 
     @DeleteMapping("/{id}")
-    public boolean eliminarProducto(int id){
+    public boolean eliminarProducto(@PathVariable int id){
         return pasteleriaService.eliminarProducto(id);
     }
 
