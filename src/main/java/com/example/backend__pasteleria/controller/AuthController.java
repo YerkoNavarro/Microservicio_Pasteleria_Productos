@@ -33,6 +33,8 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
+        // Código JWT inutilizado - ahora usa localStorage
+        /*
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.username(), request.password())
         );
@@ -44,6 +46,30 @@ public class AuthController {
 
         String token = jwtUtil.generateToken(user.getUsername(), roles);
         return ResponseEntity.ok(new AuthResponse(token));
+        */
+        
+        // Nueva implementación con localStorage (sin JWT)
+        try {
+            // Autenticación básica sin Spring Security
+            User user = userRepository.findByUsername(request.username())
+                    .orElse(null);
+                    
+            if (user != null && passwordEncoder.matches(request.password(), user.getPassword())) {
+                boolean isAdmin = user.getRoles().contains(User.Role.ADMIN);
+                return ResponseEntity.ok(new AuthResponse(
+                    user.getUsername(), 
+                    isAdmin, 
+                    "Login successful"
+                    //, token comentado
+                ));
+            } else {
+                return ResponseEntity.status(401)
+                    .body(new AuthResponse(null, false, "Credenciales inválidas"));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(500)
+                .body(new AuthResponse(null, false, "Error en servidor"));
+        }
     }
 
     @PostMapping("/register")

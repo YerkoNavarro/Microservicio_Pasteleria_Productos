@@ -1,6 +1,10 @@
 package com.example.backend__pasteleria.config;
 
-import com.example.backend__pasteleria.security.JwtAuthenticationFilter;
+// Imports JWT inutilizados pero conservados para futura reactivación
+// import com.example.backend__pasteleria.security.JwtAuthenticationFilter;
+// import org.springframework.security.config.http.SessionCreationPolicy;
+// import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 import com.example.backend__pasteleria.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,11 +15,9 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -30,8 +32,8 @@ public class SecurityConfig {
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
-    @Autowired
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
+    // @Autowired
+    // private JwtAuthenticationFilter jwtAuthenticationFilter; // JWT inutilizado pero conservado
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -54,15 +56,18 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        // Código JWT inutilizado - ahora usa localStorage
         http.csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/productos/**").hasAnyRole("USER", "ADMIN")
-                        .anyRequest().authenticated()
+                        .requestMatchers("/productos/**").permitAll() // Temporal: permitir todo sin autenticación
+                        // .requestMatchers("/productos/**").hasAnyRole("USER", "ADMIN")
+                        .anyRequest().permitAll() // Temporal: permitir todo
+                        // .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                // .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // JWT inutilizado
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
         return http.build();

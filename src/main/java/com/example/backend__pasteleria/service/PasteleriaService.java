@@ -20,24 +20,14 @@ public class PasteleriaService {
     
 
     //crud de productos
-    public boolean crearProducto(Producto p){
+    public ProductEntity crearProducto(Producto p){
         ProductEntity  Entity = new ProductEntity();
-           try {
-            
-            Entity.setNombre(p.getNombre());
-            Entity.setPrecio(p.getPrecio());
-            Entity.setDescripcion(p.getDescripcion());
-            Entity.setImagen(p.getImagen());
-            Repository.save(Entity);
-            System.out.println("Producto creado exitosamente en la base de datos");
-            return true;
-           } catch (Exception e) {
-            System.out.println("Error al crear el producto");
-            return false;
-           }
-            
-        
-        
+        Entity.setNombre(p.getNombre());
+        Entity.setPrecio(p.getPrecio());
+        Entity.setDescripcion(p.getDescripcion());
+        Entity.setImagen(p.getImagen());
+        ProductEntity savedEntity = Repository.save(Entity);
+        return savedEntity;
     }
     
     @Transactional
